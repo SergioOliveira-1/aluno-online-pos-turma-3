@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
@@ -16,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Data
 @Entity
+@Builder
 public class Aluno implements Serializable {
 
     @Id
@@ -26,7 +28,7 @@ public class Aluno implements Serializable {
     @Size(min = 2, max = 150, message = "O nome deve ter entre 2 e 30 caracteres")
     private String name;
 
-     @EmailValidation
+    @EmailValidation
     private String email;
 
     @CPF

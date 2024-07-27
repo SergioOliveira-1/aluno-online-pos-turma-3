@@ -12,4 +12,9 @@ public class ScheduleTask {
     public void executeTask(){
         log.info("Turma Backend Jr - Task executada");
     }
+    @Scheduled(fixedRate = 60000)
+    public void envioEmail(){
+        log.info("Enviando Email");
+    }
+
 }

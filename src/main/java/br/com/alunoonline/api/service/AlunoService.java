@@ -30,15 +30,24 @@ public class AlunoService {
 
     }
 
-    private void atualizaEnderecoPorCep(Aluno aluno) {
-        var cep = aluno.getEndereco().getCep();
-        var enderecoResponse = viaCepClient.consultaCep(cep);
+    public void createAll(List<Aluno> listaAlunos){
+        alunoRepository.saveAll(listaAlunos);
+    }
 
-        aluno.getEndereco().setLocalidade(enderecoResponse.getLocalidade());
-        aluno.getEndereco().setUf(enderecoResponse.getUf());
-        aluno.getEndereco().setBairro(enderecoResponse.getBairro());
-        aluno.getEndereco().setComplemento(enderecoResponse.getComplemento());
-        aluno.getEndereco().setLogradouro(enderecoResponse.getLogradouro());
+    public void atualizaEnderecoPorCep(Aluno aluno) {
+        var cep = aluno.getEndereco().getCep();
+        log.info("Consultando cep: {}", cep);
+        try {
+            var enderecoResponse = viaCepClient.consultaCep(cep);
+
+            aluno.getEndereco().setLocalidade(enderecoResponse.getLocalidade());
+            aluno.getEndereco().setUf(enderecoResponse.getUf());
+            aluno.getEndereco().setBairro(enderecoResponse.getBairro());
+            aluno.getEndereco().setComplemento(enderecoResponse.getComplemento());
+            aluno.getEndereco().setLogradouro(enderecoResponse.getLogradouro());
+        }catch (Exception e){
+            log.warn("Erro de integração, Cep não encontrado {} ", cep);
+        }
     }
 
     public List<Aluno> findAll() {
